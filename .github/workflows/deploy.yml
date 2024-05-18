@@ -1,0 +1,34 @@
+name: deploy
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: "Log level"
+        required: true
+        default: "warning"
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+  push:
+    branches: ["main"]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build app
+        run: yarn build
+
+      - name: Deploy- name
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: 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
+          external_repository: tranquoclinh247/tranquoclinh247.github.io
+          publish_dir: ./dist
